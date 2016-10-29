@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Family Board</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="js/calender-api.js"></script>
+    <script>
+        function start() {
+            // 2. Initialize the JavaScript client library.
+            gapi.client.init({
+                'apiKey': 'YOUR_API_KEY',
+                'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
+                // clientId and scope are optional if auth is not required.
+                'clientId': 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+                'scope': 'profile',
+            }).then(function() {
+                // 3. Initialize and make the API request.
+                return gapi.client.people.people.get({
+                    resourceName: 'people/me'
+                });
+            }).then(function(resp) {
+                console.log(resp.result);
+            }, function(reason) {
+                console.log('Error: ' + reason.result.error.message);
+            });
+        }
+
+        // 1. Load the JavaScript client library.
+        gapi.load('client', start);
+
+        $(document).ready(function(){
+            alert("Hello World");
+        });
+    </script>
+</head>
+<body>
+    //ClientId: 468104940896-nm65fr8s2qf39nhj4fqcdpoteorj1abp.apps.googleusercontent.com
+    //ClientSecret: lp2rLZpOV4ZscDk0HEh5CxoY
+</body>
+</html>

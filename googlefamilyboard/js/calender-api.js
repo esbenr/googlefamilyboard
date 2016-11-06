@@ -26,6 +26,10 @@ Date.prototype.addDays = function(days) {
     return this;
 };
 
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function getEventsForDay(currentDay, events) {
     var currentDayEvents = events.filter(function (event) {
         var when = event.start.dateTime;

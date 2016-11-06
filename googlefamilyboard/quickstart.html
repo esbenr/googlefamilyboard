@@ -7,7 +7,7 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/calender-api.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/locale/da.js"></script>
     <script type="text/javascript">
         // Your Client ID can be retrieved from your project in the Google
@@ -88,7 +88,7 @@
                 case 6: return 5;
             }
 
-        }
+        };
 
         var getWeekStartEnd = function (curr) {
             var first = curr.getDate() - dayOfWeek(curr);
@@ -100,11 +100,6 @@
             return [monday, sunday];
         };
 
-        /**
-         * Print the summary and start datetime/date of the next ten events in
-         * the authorized user's calendar. If no events are found an
-         * appropriate message is printed.
-         */
         function listUpcomingEvents() {
             var calendars = ["tobias@giflen.dk", "mikkel@giflen.dk", "markus@buecking.dk", "eva-maria@buecking.dk", "esben@giflen.dk"];
             for (i = 0; i < calendars.length; i++) {
@@ -141,18 +136,6 @@
                 }
                 $('#content').append("</tr>");
             });
-        }
-
-        /**
-         * Append a pre element to the body containing the given message
-         * as its text node.
-         *
-         * @param {string} message Text to be placed in pre element.
-         */
-        function appendPre(message) {
-            var pre = document.getElementById('output');
-            var textContent = document.createTextNode(message + '\n');
-            pre.appendChild(textContent);
         }
     </script>
     <script src="https://apis.google.com/js/client.js?onload=drawHeader"></script>

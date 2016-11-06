@@ -1,8 +1,11 @@
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/calender-api.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript">
         // Your Client ID can be retrieved from your project in the Google
@@ -29,15 +32,11 @@
          * @param {Object} authResult Authorization result.
          */
         function handleAuthResult(authResult) {
-            var authorizeDiv = document.getElementById('authorize-div');
             if (authResult && !authResult.error) {
-                // Hide auth UI, then load client library.
-                authorizeDiv.style.display = 'none';
                 loadCalendarApi();
             } else {
-                // Show auth UI, allowing the user to initiate authorization by
-                // clicking authorize button.
-                authorizeDiv.style.display = 'inline';
+                // Perform authentication
+                handleAuthClick(event);
             }
         }
 
@@ -61,24 +60,70 @@
             gapi.client.load('calendar', 'v3', listUpcomingEvents);
         }
 
+        var dayOfWeek = function (day) {
+            switch (day.getDay()) {
+                case 0: return 6;
+                case 1: return 0;
+                case 2: return 1;
+                case 3: return 2;
+                case 4: return 3;
+                case 5: return 4;
+                case 6: return 5;
+            }
+
+        }
+
+        var getWeekStartEnd = function (curr) {
+            var first = curr.getDate() - dayOfWeek(curr);
+            var m = new Date(curr.setDate(first));
+            var monday = new Date(m.setHours(0,0,0,0));
+
+            var sunday = new Date(monday);
+            sunday.addDays(7);
+            return [monday, sunday];
+        };
+
         /**
          * Print the summary and start datetime/date of the next ten events in
          * the authorized user's calendar. If no events are found an
          * appropriate message is printed.
          */
         function listUpcomingEvents() {
+            var curr = getWeekStartEnd(new Date());
+            var monday = curr[0];
+            var sunday = curr[1];
+            console.log('monday', monday);
+            console.log('sunday', sunday);
+
             var request = gapi.client.calendar.events.list({
                 'calendarId': 'primary',
-                'timeMin': (new Date()).toISOString(),
+                'timeMin': monday.toISOString(),
+                'timeMax': sunday.toISOString(),
                 'showDeleted': false,
                 'singleEvents': true,
-                'maxResults': 10,
+                'maxResults': 1000,
                 'orderBy': 'startTime'
             });
 
             request.execute(function(resp) {
                 var events = resp.items;
                 appendPre('Upcoming events:');
+
+                $('#content').append("<table><tr>");
+                $('#content').append("<td>Names</td>");
+                for (j = 0; j < 7; j++) {
+                    var day = new Date(monday);
+                    day.addDays(j);
+                    $('#content').append("<td>" + day.getDate() + "-" + (day.getMonth()+1) + "-" + day.getFullYear() + "</td>");
+                }
+                $('#content').append("</tr></table>");
+
+                for (k = 0; k < 7; k++) {
+                    var kday = new Date(monday);
+                    day.addDays(j);
+                    var kdaysEvents = getEventsForDay(kday, events);
+                    $('#content').append("<td>" +  + "</td>");
+                }
 
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {
@@ -87,12 +132,13 @@
                         if (!when) {
                             when = event.start.date;
                         }
-                        appendPre(event.summary + ' (' + when + ')')
+                        appendPre(event.summary + ' (' + when + ')');
                     }
                 } else {
                     appendPre('No upcoming events found.');
                 }
 
+                /**$('#content').append("</table>");**/
             });
         }
 
@@ -111,13 +157,10 @@
     <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 </head>
 <body>
-<div id="authorize-div" style="display: none">
-    <span>Authorize access to Google Calendar API</span>
-    <!--Button for the user to click to initiate auth sequence -->
-    <button id="authorize-button" onclick="handleAuthClick(event)">
-        Authorize
-    </button>
+<div id="content">
+
 </div>
+
 <pre id="output"></pre>
 </body>
 </html>

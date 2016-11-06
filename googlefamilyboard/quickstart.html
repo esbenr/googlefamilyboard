@@ -7,6 +7,8 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/calender-api.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/locale/da.js"></script>
     <script type="text/javascript">
         // Your Client ID can be retrieved from your project in the Google
         // Developer Console, https://console.developers.google.com
@@ -114,16 +116,19 @@
                 for (j = 0; j < 7; j++) {
                     var day = new Date(monday);
                     day.addDays(j);
-                    $('#content').append("<td>" + day.getDate() + "-" + (day.getMonth()+1) + "-" + day.getFullYear() + "</td>");
+                    $('#content').append("<td>" + moment(day).format('L') + "</td>");
                 }
-                $('#content').append("</tr></table>");
+                $('#content').append("</tr><tr>");
 
+                $('#content').append("<td>Names</td>");
                 for (k = 0; k < 7; k++) {
                     var kday = new Date(monday);
                     day.addDays(j);
                     var kdaysEvents = getEventsForDay(kday, events);
-                    $('#content').append("<td>" +  + "</td>");
+                    $('#content').append("<td>" + stringForEvents(kdaysEvents) + "</td>");
                 }
+
+                $('#content').append("</tr>");
 
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {

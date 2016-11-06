@@ -39,7 +39,15 @@ function getEventsForDay(currentDay, events) {
 }
 
 function stringForEvents(events) {
-
+        var output = "";
+        for (i = 0; i < events.length; i++) {
+            var event = events[i];
+            var when = event.start.dateTime;
+            if (!when) {
+                when = event.start.date;
+            }
+            output = output + moment(when).format('LT') + " " + event.summary + "</br>";
+        }
+        return output;
 }
-
 

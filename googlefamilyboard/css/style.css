@@ -4,25 +4,32 @@ table, tr, td {
     font-family: Verdana, sans-serif;
 }
 
+.before {
+    color: #a1a1a1;
+}
+
+.after {
+    color: #000000;
+}
+
+.today {
+    font-weight: bold;
+    background-color: #d4ecff;
+}
+
 .weekdayname {
     font-size: 26pt;
     font-weight: bold;
     text-align: center;
+    color: #000000;
 }
 
 .weekdaydate {
     font-weight: normal;
     text-align: center;
+    color: #000000;
 }
 
 .calendarname {
     white-space: nowrap;
-}
-
-.off {
-    color: #606060;
-}
-
-.on {
-    color: #000000;
 }

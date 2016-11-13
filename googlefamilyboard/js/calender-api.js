@@ -42,6 +42,13 @@ function getEventsForDay(currentDay, events) {
     return currentDayEvents;
 }
 
+function classesForDate(d) {
+    var n = new Date();
+    var now = moment(n);
+    var date = moment(d);
+    return ((date.isBefore(now, 'minutes')) ? "before" : "after") + ((date.isSame(now, 'day')) ? " today" : "");
+}
+
 function stringForEvents(events) {
         var output = "";
         for (i = 0; i < events.length; i++) {
@@ -54,14 +61,8 @@ function stringForEvents(events) {
             if (!finish) {
                 finish = event.end.date;
             }
-            var n = new Date();
-            var now = moment(n);
-            var end = moment(finish);
-            console.log(now);
-            console.log(end);
-            console.log(end > now);
-            console.log("---------------");
-            output = output + "<div class='" + ((end > now) ? "on" : "off") + "'>" + moment(when).format('LT') + " " + event.summary + "</div>";
+
+            output = output + "<div class='" + classesForDate(finish) + "'>" + moment(when).format('LT') + " " + event.summary + "</div>";
         }
         return output;
 }

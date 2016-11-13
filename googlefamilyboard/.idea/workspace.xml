@@ -26,28 +26,28 @@
       <file leaf-file-name="quickstart.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/quickstart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="45" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="45" />
+            <state relative-caret-position="414">
+              <caret line="135" column="76" selection-start-line="135" selection-start-column="76" selection-end-line="135" selection-end-column="76" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="18" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="18" />
+            <state relative-caret-position="510">
+              <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calender-api.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="calender-api.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/calender-api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="63" column="78" selection-start-line="63" selection-start-column="78" selection-end-line="63" selection-end-column="78" />
+            <state relative-caret-position="345">
+              <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
               <folding>
                 <element signature="n#!!doc;n#start#0" expanded="false" />
               </folding>
@@ -73,8 +73,8 @@
         <option value="$PROJECT_DIR$/index.htm.html" />
         <option value="$PROJECT_DIR$/QuickStart.html" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/quickstart.html" />
         <option value="$PROJECT_DIR$/js/calender-api.js" />
+        <option value="$PROJECT_DIR$/quickstart.html" />
         <option value="$PROJECT_DIR$/css/style.css" />
       </list>
     </option>
@@ -260,12 +260,12 @@
       <workItem from="1477899085292" duration="6123000" />
       <workItem from="1478428174291" duration="7897000" />
       <workItem from="1478948303411" duration="293000" />
-      <workItem from="1478974818689" duration="3951000" />
+      <workItem from="1478974818689" duration="6216000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30561000" />
+    <option name="totallyTimeSpent" value="32826000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -415,29 +415,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/calender-api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+          <folding>
+            <element signature="n#!!doc;n#start#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/quickstart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="45" />
+        <state relative-caret-position="414">
+          <caret line="135" column="76" selection-start-line="135" selection-start-column="76" selection-end-line="135" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="18" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="18" />
+        <state relative-caret-position="510">
+          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/calender-api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="63" column="78" selection-start-line="63" selection-start-column="78" selection-end-line="63" selection-end-column="78" />
-          <folding>
-            <element signature="n#!!doc;n#start#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>

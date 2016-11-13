@@ -25,7 +25,7 @@
             for (j = 0; j < 7; j++) {
                 var day = new Date(monday);
                 day.addDays(j);
-                $('#content').append("<td><div class='weekdayname'>" + moment(day).format('dddd').capitalizeFirstLetter() + "</div><div class='weekdaydate'>d. " + moment(day).format('Do MMM YYYY').capitalizeFirstLetter() + "</div></td>");
+                $('#content').append("<td class='" + classesForDate(day) + "'><div class='weekdayname'>" + moment(day).format('dddd').capitalizeFirstLetter() + "</div><div class='weekdaydate'>d. " + moment(day).format('Do MMM YYYY').capitalizeFirstLetter() + "</div></td>");
             }
             $('#content').append("</tr>");
 
@@ -133,7 +133,7 @@
                     var kday = new Date(monday);
                     kday.addDays(k);
                     var kdaysEvents = getEventsForDay(kday, events);
-                    $('#content').append("<td>" + stringForEvents(kdaysEvents) + "</td>");
+                    $('#content').append("<td class='" + classesForDate(kday) + "'>" + stringForEvents(kdaysEvents) + "</td>");
                 }
                 $('#content').append("</tr>");
             });

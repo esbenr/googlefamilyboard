@@ -50,7 +50,18 @@ function stringForEvents(events) {
             if (!when) {
                 when = event.start.date;
             }
-            output = output + moment(when).format('LT') + " " + event.summary + "</br>";
+            var finish = event.end.dateTime;
+            if (!finish) {
+                finish = event.end.date;
+            }
+            var n = new Date();
+            var now = moment(n);
+            var end = moment(finish);
+            console.log(now);
+            console.log(end);
+            console.log(end > now);
+            console.log("---------------");
+            output = output + "<div class='" + ((end > now) ? "on" : "off") + "'>" + moment(when).format('LT') + " " + event.summary + "</div>";
         }
         return output;
 }

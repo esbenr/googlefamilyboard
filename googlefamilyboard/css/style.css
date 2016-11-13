@@ -1,5 +1,28 @@
 table, tr, td {
     border: 1px solid black;
     font-size: 12pt;
-    font-family: Chalkduster;
+    font-family: Verdana, sans-serif;
+}
+
+.weekdayname {
+    font-size: 26pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+.weekdaydate {
+    font-weight: normal;
+    text-align: center;
+}
+
+.calendarname {
+    white-space: nowrap;
+}
+
+.off {
+    color: #606060;
+}
+
+.on {
+    color: #000000;
 }

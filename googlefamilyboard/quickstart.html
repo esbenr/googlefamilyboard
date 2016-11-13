@@ -25,7 +25,7 @@
             for (j = 0; j < 7; j++) {
                 var day = new Date(monday);
                 day.addDays(j);
-                $('#content').append("<td>" + moment(day).format('dddd Do MMM YYYY').capitalizeFirstLetter() + "</td>");
+                $('#content').append("<td><div class='weekdayname'>" + moment(day).format('dddd').capitalizeFirstLetter() + "</div><div class='weekdaydate'>d. " + moment(day).format('Do MMM YYYY').capitalizeFirstLetter() + "</div></td>");
             }
             $('#content').append("</tr>");
 
@@ -128,7 +128,7 @@
                 var events = resp.items;
 
                 $('#content').append("<tr>");
-                $('#content').append("<td>" + calendarName.split("@")[0].capitalizeFirstLetter() + "</td>");
+                $('#content').append("<td><span class='calendarname'>" + calendarName.split("@")[0].capitalizeFirstLetter() + "</span></td>");
                 for (k = 0; k < 7; k++) {
                     var kday = new Date(monday);
                     kday.addDays(k);

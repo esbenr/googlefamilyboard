@@ -36,6 +36,10 @@ const renderHeader = () => {
 };
 
 const getCalendar = (name) => {
+
+
+
+    
     return new Promise(resolve => {
             resolve({
                 name: name,
@@ -56,10 +60,10 @@ const draw = () => {
     moment.locale('da');
     let main = document.querySelector('.main');
     Promise.all([
-        getCalendar('Esben'),
-        getCalendar('Tobias'),
-        getCalendar('Mikkel'),
-        getCalendar('Jeppe')
+        getCalendar('esben@giflen.dk'),
+        //getCalendar('Tobias'),
+        //getCalendar('Mikkel'),
+        //getCalendar('Jeppe')
     ])
         .then(cals => {
         return cals.map(renderCal).join('')

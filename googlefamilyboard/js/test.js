@@ -37,12 +37,28 @@ const renderHeader = () => {
 
 const getCalendar = (name) => {
 
+    var monday = moment().startOf('week');
+    var sunday = moment().endOf('week');
+    console.log(monday);
+    console.log(sunday);
 
+    var request = gapi.client.calendar.events.list({
+        'calendarId': name,
+        'timeMin': monday.toISOString(),
+        'timeMax': sunday.toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 1000,
+        'orderBy': 'startTime'
+    });
 
-    
-    return new Promise(resolve => {
+    request.execute(function(resp) {
+        var events = resp.items;
+        console.log(events);
+
+        return new Promise(resolve => {
             resolve({
-                name: name,
+                name: 'ere',
                 events: [
                     [],
                     [],
@@ -54,6 +70,7 @@ const getCalendar = (name) => {
                 ]
             })
         })
+    });
 };
 
 const draw = () => {

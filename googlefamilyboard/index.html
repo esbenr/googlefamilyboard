@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="da">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Google Family Board</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script type="text/javascript" src="js/calender-api.js"></script>
+    <script type="text/javascript" src="js/test.js"></script>
+    <link rel="stylesheet/less" type="text/css" href="less/style.less" />
+    <script src="https://cdn.jsdelivr.net/less/2.7.1/less.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.16.0/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.16.0/locales.min.js"></script>
     <script>
-        // 1. Load the JavaScript client library.
-        gapi.load('client', start);
-
-        $(document).ready(function(){
-            alert("Hello World");
+        $(function() {
+            draw();
         });
+
     </script>
 </head>
 <body>
-    //ClientId: 468104940896-nm65fr8s2qf39nhj4fqcdpoteorj1abp.apps.googleusercontent.com
-    //ClientSecret: lp2rLZpOV4ZscDk0HEh5CxoY
+
+<div class="main">
+</div>
+
+
 </body>
 </html>

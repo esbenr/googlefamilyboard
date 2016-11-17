@@ -44,5 +44,5 @@ function handleAuthClick(event) {
  * once client library is loaded.
  */
 function loadCalendarApi() {
-    gapi.client.load('calendar', 'v3', draw);
+    gapi.client.load('calendar', 'v3', init);
 }

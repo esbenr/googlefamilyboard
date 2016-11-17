@@ -1,93 +1,90 @@
 
 const renderEvent = (event) => {
-    return `<div class="event"><p>${event}</p></div>`
+    return `<div class="event"><p>${event.summary}</p></div>`
 };
 
-const renderDay = (day) => {
-    return day.map(events => {
-            return `<div class="day">${events.map(renderEvent).join('')}</div>`
-        }).join('')
+const getEventsFromDay =(events, day) => {
+    return events.filter(event => {
+        let m = moment(event.start.dateTime);
+        return m.isSame(day, 'day');
+    })
+}
+
+const renderEvents = (events, startDate, endDate) => {
+    let html = '';
+    let day = moment(startDate);
+    while (day.isSameOrBefore(endDate)) {
+        html += `<div class="day">${getEventsFromDay(events, day).map(renderEvent).join('')}</div>`;
+        day = day.add(1, 'day');
+    }
+    return html;
 };
 
-const renderCal = (cal) => {
+const renderCal = (cal, startDate, endDate) => {
     let html = `<div class="cal">
       <div class="name">${cal.name}</div>
   `;
-    html += renderDay(cal.events);
+    html += renderEvents(cal.events, startDate, endDate);
     html += `</div>`;
     return html;
 };
 
-const renderHeader = () => {
-    let m = moment().startOf('week');
-    let daysA = [];
-    for (let i = 0; i < 7; i++) {
-        daysA.push(m.format('dddd'));
-        m.add(1, 'day')
-    }
-    let days = daysA.map(d => `<div class="day">${d}</div>`)
-.join('');
-
+const renderHeader = (startDate, endDate) => {
     let html = `<div class="header">
-      <div class="spacer"></div>
-      ${days}
-    </div>`;
+      <div class="spacer"></div>`;
+    let day = moment(startDate);
+    while (day.isSameOrBefore(endDate)) {
+        html += `<div class="day">${day.format('dddd')}</div>`;
+        day = day.add(1, 'day');
+    }
+    html += `</div>`;
     return html;
 };
 
-const getCalendar = (name) => {
+const getCalendar = (name, startDate, endDate) => {
+    return new Promise(resolve => {
 
-    var monday = moment().startOf('week');
-    var sunday = moment().endOf('week');
-    console.log(monday);
-    console.log(sunday);
+        var request = gapi.client.calendar.events.list({
+            'calendarId': name,
+            'timeMin': startDate.toISOString(),
+            'timeMax': endDate.toISOString(),
+            'showDeleted': false,
+            'singleEvents': true,
+            'maxResults': 1000,
+            'orderBy': 'startTime'
+        });
 
-    var request = gapi.client.calendar.events.list({
-        'calendarId': name,
-        'timeMin': monday.toISOString(),
-        'timeMax': sunday.toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 1000,
-        'orderBy': 'startTime'
-    });
-
-    request.execute(function(resp) {
-        var events = resp.items;
-        console.log(events);
-
-        return new Promise(resolve => {
-            resolve({
-                name: 'ere',
-                events: [
-                    [],
-                    [],
-                    ['test', 'test2'],
-                    [],
-                    [],
-                    ['foobar'],
-                    []
-                ]
+        request.execute(function(resp) {
+            var events = resp.items;
+                resolve({
+                    name,
+                    events
+                })
             })
-        })
     });
 };
 
-const draw = () => {
+const init = () => {
     moment.locale('da');
+    let startDate = moment().startOf('week');
+    let endDate = moment().endOf('week');
+    draw(startDate, endDate);
+}
+
+const draw = (startDate, endDate) => {
     let main = document.querySelector('.main');
     Promise.all([
-        getCalendar('esben@giflen.dk'),
+        getCalendar('esben@giflen.dk', startDate, endDate),
         //getCalendar('Tobias'),
         //getCalendar('Mikkel'),
         //getCalendar('Jeppe')
     ])
         .then(cals => {
-        return cals.map(renderCal).join('')
+        return cals.map(cal => renderCal(cal, startDate, endDate)).join('')
     })
-.then(html => {
-        main.innerHTML = renderHeader() + html;
-    // setTimeout(draw, 3600 * 1000);
-})
+    .then(html => {
+        main.innerHTML = renderHeader(startDate, endDate) + html;
+        // setTimeout(draw, 3600 * 1000);
+    })
 
 };

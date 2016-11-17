@@ -7,6 +7,8 @@
 .main {
 
   @spacing: 4px;
+  @columnWidth: calc(100% / 9);
+
   @nameColumnBg: rgb(255, 255, 255);
   @weekdayColumnBg: rgb(255, 255, 255);
   @eventBg: hsla(250, 50%, 60%, 1);
@@ -15,7 +17,7 @@
   display: flex;
   flex-direction: column;
 
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -30,13 +32,13 @@
     padding: @spacing;
 
     .spacer {
-      flex: 0 0 100px;
+      flex: 0 0 @columnWidth;
       margin: @spacing;
       padding: @spacing;
     }
 
     .day {
-      flex: 1 0 calc(100% / 7 - 100px);
+      flex: 1 0 @columnWidth;
       background: @weekdayHeaderBg;
       margin: @spacing;
       padding: @spacing;
@@ -51,28 +53,28 @@
     margin: @spacing;
     border-radius: 3px;
     padding: @spacing;
-    flex: 0 0 auto;
+    flex: 0 0 @columnWidth;
   }
 
   .cal {
     display: flex;
     flex-direction: row;
     padding: @spacing;
-    flex: 1 0 auto;
+    flex: 1 0 @columnWidth;
 
     //&:nth-child(even) {
       background: hsla(0, 0%, 0%, 1);
     //}
 
     .name {
-      flex: 0 0 100px;
+      flex: 0 0 @columnWidth;
       background: @nameColumnBg;
       margin: @spacing;
       padding: @spacing;
     }
 
     .day {
-      flex: 1 0 calc(100% / 7 - 100px);
+      flex: 1 0 @columnWidth;
       background: @weekdayColumnBg;
       margin: @spacing;
       display: flex;

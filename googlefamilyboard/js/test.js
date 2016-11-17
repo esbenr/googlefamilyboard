@@ -69,15 +69,17 @@ const init = () => {
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
     draw(startDate, endDate);
-}
+};
 
 const draw = (startDate, endDate) => {
     let main = document.querySelector('.main');
     Promise.all([
+        getCalendar('markus@buecking.dk', startDate, endDate),
+        getCalendar('tobias@giflen.dk', startDate, endDate),
+        getCalendar('mikkel@giflen.dk', startDate, endDate),
         getCalendar('esben@giflen.dk', startDate, endDate),
-        //getCalendar('Tobias'),
-        //getCalendar('Mikkel'),
-        //getCalendar('Jeppe')
+        getCalendar('eva-maria@buecking.dk', startDate, endDate),
+
     ])
         .then(cals => {
         return cals.map(cal => renderCal(cal, startDate, endDate)).join('')

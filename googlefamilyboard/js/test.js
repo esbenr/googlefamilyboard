@@ -41,11 +41,11 @@ const renderHeader = (startDate, endDate) => {
     return html;
 };
 
-const getCalendar = (name, startDate, endDate) => {
+const getCalendar = (calendar, startDate, endDate) => {
     return new Promise(resolve => {
 
         var request = gapi.client.calendar.events.list({
-            'calendarId': name,
+            'calendarId': calendar.name,
             'timeMin': startDate.toISOString(),
             'timeMax': endDate.toISOString(),
             'showDeleted': false,
@@ -57,7 +57,7 @@ const getCalendar = (name, startDate, endDate) => {
         request.execute(function(resp) {
             var events = resp.items;
                 resolve({
-                    name,
+                    name: calendar.alias,
                     events
                 })
             })
@@ -68,19 +68,15 @@ const init = () => {
     moment.locale('da');
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
-    draw(startDate, endDate);
+    let calendars = [{name:'markus@buecking.dk', alias: 'Markus'}, {name:'mikkel@giflen.dk', alias: 'Mikkel'}];
+    draw(calendars, startDate, endDate);
 };
 
-const draw = (startDate, endDate) => {
+const draw = (calendars, startDate, endDate) => {
     let main = document.querySelector('.main');
-    Promise.all([
-        getCalendar('markus@buecking.dk', startDate, endDate),
-        getCalendar('tobias@giflen.dk', startDate, endDate),
-        getCalendar('mikkel@giflen.dk', startDate, endDate),
-        getCalendar('esben@giflen.dk', startDate, endDate),
-        getCalendar('eva-maria@buecking.dk', startDate, endDate),
-
-    ])
+    Promise.all(
+        calendars.map(calendar => getCalendar(calendar, startDate, endDate))
+    )
         .then(cals => {
         return cals.map(cal => renderCal(cal, startDate, endDate)).join('')
     })

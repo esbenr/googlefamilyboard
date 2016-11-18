@@ -21,6 +21,12 @@ const renderEvents = (events, startDate, endDate) => {
 };
 
 const renderCal = (cal, startDate, endDate) => {
+
+    less.modifyVars({ /* this sets the color to the variable */
+        '@calendarColor': cal.color
+    });
+    less.refreshStyles();
+
     let html = `<div class="cal">
       <div class="name">${cal.name}</div>
   `;
@@ -42,6 +48,7 @@ const renderHeader = (startDate, endDate) => {
 };
 
 const getCalendar = (calendar, startDate, endDate) => {
+
     return new Promise(resolve => {
 
         var request = gapi.client.calendar.events.list({
@@ -58,6 +65,7 @@ const getCalendar = (calendar, startDate, endDate) => {
             var events = resp.items;
                 resolve({
                     name: calendar.alias,
+                    color: calendar.color,
                     events
                 })
             })
@@ -68,12 +76,38 @@ const init = () => {
     moment.locale('da');
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
-    let calendars = [{name:'markus@buecking.dk', alias: 'Markus'}, {name:'mikkel@giflen.dk', alias: 'Mikkel'}];
+    let calendars = [
+        {
+            name:'markus@buecking.dk',
+            alias: 'Markus',
+            color: '#FF0000'
+        },
+        {
+            name:'mikkel@giflen.dk',
+            alias: 'Mikkel',
+            color: '#0FF000'
+        },
+        {
+            name:'tobias@giflen.dk',
+            alias: 'Tobias',
+            color: '#00FF00'
+        },
+        {
+            name:'eva-maria@buecking.dk',
+            alias: 'Eva-Maria',
+            color: '#000FF0'
+        },
+        {
+            name:'esben@giflen.dk',
+            alias: 'Esben',
+            color: '#0000FF'
+        }];
     draw(calendars, startDate, endDate);
 };
 
 const draw = (calendars, startDate, endDate) => {
     let main = document.querySelector('.main');
+
     Promise.all(
         calendars.map(calendar => getCalendar(calendar, startDate, endDate))
     )
@@ -82,7 +116,7 @@ const draw = (calendars, startDate, endDate) => {
     })
     .then(html => {
         main.innerHTML = renderHeader(startDate, endDate) + html;
-        // setTimeout(draw, 3600 * 1000);
+        //setTimeout(init, 1000);
     })
 
 };

@@ -1,3 +1,5 @@
+@calendarColor: #000000;
+
 * {
   margin: 0;
   font-family: sans-serif;
@@ -6,13 +8,25 @@
 
 .main {
 
+  @border: 1px;
   @spacing: 4px;
+  @noSpacing: 0px;
   @columnWidth: calc(100% / 9);
 
-  @nameColumnBg: rgb(255, 255, 255);
-  @weekdayColumnBg: rgb(255, 255, 255);
-  @eventBg: hsla(250, 50%, 60%, 1);
+  @purpleDark: #382249;
+  @purpleMedium: #744796;
+  @purpleLight: #AF6BE3;
+  @black: #000000;
+  @grayDark: #4A4A4A;
+  @grayMedium: #969696;
+  @grayLight: #B5B5B5;
+  @white: #FFFFFF;
+
   @weekdayHeaderBg: rgb(255, 255, 255);
+  @nameColumnBg: hsl(hue(hsl(90, 100%, 50%))*3, 100%, 50%);
+  @weekdayColumnBg: rgb(255, 255, 255);
+  @calendarRow: @purpleLight;
+  @eventBg: @grayDark;
 
   display: flex;
   flex-direction: column;
@@ -61,10 +75,12 @@
     flex-direction: row;
     padding: @spacing;
     flex: 1 0 @columnWidth;
-
-    //&:nth-child(even) {
-      background: hsla(0, 0%, 0%, 1);
-    //}
+    background: @calendarRow;
+/*
+    &:nth-child(odd) {
+      background: @grayLight;
+    }
+*/
 
     .name {
       flex: 0 0 @columnWidth;

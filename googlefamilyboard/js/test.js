@@ -16,10 +16,14 @@ const renderEvents = (events, startDate, endDate) => {
     let html = '';
     let day = moment(startDate);
     while (day.isSameOrBefore(endDate)) {
-        html += `<div class="day">${getEventsFromDay(events, day).map(renderEvent).join('')}</div>`;
+        html += `<div class="day${markToday(day)}">${getEventsFromDay(events, day).map(renderEvent).join('')}</div>`;
         day = day.add(1, 'day');
     }
     return html;
+};
+
+const markToday = (day) => {
+    return moment(new Date()).isSame(day, 'day') ? ' today' : '';
 };
 
 const renderCal = (cal, startDate, endDate) => {
@@ -36,7 +40,7 @@ const renderHeader = (startDate, endDate) => {
       <div class="spacer"></div>`;
     let day = moment(startDate);
     while (day.isSameOrBefore(endDate)) {
-        html += `<div class="day">${day.format('dddd')}</div>`;
+        html += `<div class="day${markToday(day)}">${day.format('dddd')}</div>`;
         day = day.add(1, 'day');
     }
     html += `</div>`;

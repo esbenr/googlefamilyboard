@@ -1,6 +1,8 @@
 
 const renderEvent = (event) => {
-    return `<div class="event"><p>${event.summary}</p></div>`
+    let start = moment(event.start.dateTime);
+    let end = moment(event.end.dateTime);
+    return `<div class="event"><p><span class="time">${start.format('LT')}</span> <span class="summary">${event.summary}</span></p></div>`
 };
 
 const getEventsFromDay =(events, day) => {

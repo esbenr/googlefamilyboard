@@ -6,9 +6,7 @@
 
 .main {
 
-  @border: 1px;
   @spacing: 4px;
-  @noSpacing: 0px;
   @columnWidth: calc(100% / 9);
 
   @purpleDark: #382249;
@@ -55,6 +53,7 @@
       padding: @spacing;
       color: #000;
       text-align: center;
+      font-size: 26pt;
     }
   }
 
@@ -65,6 +64,14 @@
     padding: @spacing;
     flex: 0 0 @columnWidth;
     background: @grayDark;
+
+    .time {
+
+    }
+
+    .summary {
+
+    }
   }
 
   .cal {
@@ -82,7 +89,7 @@
       flex: 0 0 @columnWidth;
       margin: @spacing;
       padding: @spacing;
-      background: @white;
+      font-size: 17pt;
     }
 
     .day {

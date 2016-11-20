@@ -1,5 +1,3 @@
-@calendarColor: #000000;
-
 * {
   margin: 0;
   font-family: sans-serif;
@@ -53,7 +51,6 @@
 
     .day {
       flex: 1 0 @columnWidth;
-      background: @weekdayHeaderBg;
       margin: @spacing;
       padding: @spacing;
       color: #000;
@@ -62,12 +59,12 @@
   }
 
   .event {
-    background: @eventBg;
     color: #fff;
     margin: @spacing;
     border-radius: 3px;
     padding: @spacing;
     flex: 0 0 @columnWidth;
+    background: @grayDark;
   }
 
   .cal {
@@ -75,7 +72,6 @@
     flex-direction: row;
     padding: @spacing;
     flex: 1 0 @columnWidth;
-    background: @calendarRow;
 /*
     &:nth-child(odd) {
       background: @grayLight;
@@ -84,17 +80,17 @@
 
     .name {
       flex: 0 0 @columnWidth;
-      background: @nameColumnBg;
       margin: @spacing;
       padding: @spacing;
+      background: @white;
     }
 
     .day {
       flex: 1 0 @columnWidth;
-      background: @weekdayColumnBg;
       margin: @spacing;
       display: flex;
       flex-direction: column;
+      background: @white;
     }
   }
 

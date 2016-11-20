@@ -8,7 +8,7 @@ const getEventsFromDay =(events, day) => {
         let m = moment(event.start.dateTime);
         return m.isSame(day, 'day');
     })
-}
+};
 
 const renderEvents = (events, startDate, endDate) => {
     let html = '';
@@ -21,15 +21,9 @@ const renderEvents = (events, startDate, endDate) => {
 };
 
 const renderCal = (cal, startDate, endDate) => {
-
-    less.modifyVars({ /* this sets the color to the variable */
-        '@calendarColor': cal.color
-    });
-    less.refreshStyles();
-
-    let html = `<div class="cal">
+    let html = `<div class="cal" data-cal-color="${cal.colorId}">
       <div class="name">${cal.name}</div>
-  `;
+    `;
     html += renderEvents(cal.events, startDate, endDate);
     html += `</div>`;
     return html;
@@ -65,7 +59,7 @@ const getCalendar = (calendar, startDate, endDate) => {
             var events = resp.items;
                 resolve({
                     name: calendar.alias,
-                    color: calendar.color,
+                    colorId: calendar.colorId,
                     events
                 })
             })
@@ -79,30 +73,26 @@ const init = () => {
     let calendars = [
         {
             name:'markus@buecking.dk',
-            alias: 'Markus',
-            color: '#FF0000'
+            alias: 'Markus'
         },
         {
             name:'mikkel@giflen.dk',
-            alias: 'Mikkel',
-            color: '#0FF000'
+            alias: 'Mikkel'
         },
         {
             name:'tobias@giflen.dk',
-            alias: 'Tobias',
-            color: '#00FF00'
+            alias: 'Tobias'
         },
         {
             name:'eva-maria@buecking.dk',
-            alias: 'Eva-Maria',
-            color: '#000FF0'
+            alias: 'Eva-Maria'
         },
         {
             name:'esben@giflen.dk',
-            alias: 'Esben',
-            color: '#0000FF'
+            alias: 'Esben'
         }];
-    draw(calendars, startDate, endDate);
+    loadColors();
+    loadCalendars(calendars, startDate, endDate);
 };
 
 const draw = (calendars, startDate, endDate) => {

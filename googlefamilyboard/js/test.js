@@ -2,7 +2,7 @@
 const renderEvent = (event) => {
     let start = moment(event.start.dateTime);
     let end = moment(event.end.dateTime);
-    return `<div class="event"><p><span class="time">${start.format('LT')}</span> <span class="summary">${event.summary}</span></p></div>`
+    return `<div class="event${markOverdue(start, end)}"><p><span class="time">${start.format('LT')}</span> <span class="summary">${event.summary}</span></p></div>`
 };
 
 const getEventsFromDay =(events, day) => {
@@ -26,6 +26,19 @@ const markToday = (day) => {
     return moment(new Date()).isSame(day, 'day') ? ' today' : '';
 };
 
+const markOverdue = (start, end) => {
+    let now = moment(new Date());
+    let styleClass = '';
+    if (end.isBefore (now, 'minute')) {
+        styleClass = ' overDue';
+    }
+    if (start.isBefore(now, 'minutes') && end.isAfter(now, 'minutes')) {
+        styleClass = ' due blink';
+    }
+
+    return styleClass;
+};
+
 const renderCal = (cal, startDate, endDate) => {
     let html = `<div class="cal" data-cal-color="${cal.colorId}">
       <div class="name">${cal.name}</div>
@@ -40,7 +53,7 @@ const renderHeader = (startDate, endDate) => {
       <div class="spacer"></div>`;
     let day = moment(startDate);
     while (day.isSameOrBefore(endDate)) {
-        html += `<div class="day${markToday(day)}">${day.format('dddd')}</div>`;
+        html += `<div class="day">${day.format('dddd').capitalizeFirstLetter()}</div>`;
         day = day.add(1, 'day');
     }
     html += `</div>`;
@@ -115,4 +128,8 @@ const draw = (calendars, startDate, endDate) => {
         //setTimeout(init, 1000);
     })
 
+};
+
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 };

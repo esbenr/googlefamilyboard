@@ -1,28 +1,29 @@
+@spacing: 4px;
+@columnWidth: calc(100% / 9);
+
+@purpleDark: #382249;
+@purpleMedium: #744796;
+@purpleLight: #AF6BE3;
+@black: #000000;
+@grayDark: #4A4A4A;
+@grayMedium: #969696;
+@grayLight: #c8c8c8;
+@grayLighter: #dcdcdc;
+@white: #FFFFFF;
+
+@weekdayHeaderBg: rgb(255, 255, 255);
+@nameColumnBg: hsl(hue(hsl(90, 100%, 50%))*3, 100%, 50%);
+@weekdayColumnBg: rgb(255, 255, 255);
+@calendarRow: @purpleLight;
+@eventBg: @grayDark;
+
 * {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   box-sizing: border-box;
 }
 
 .main {
-
-  @spacing: 4px;
-  @columnWidth: calc(100% / 9);
-
-  @purpleDark: #382249;
-  @purpleMedium: #744796;
-  @purpleLight: #AF6BE3;
-  @black: #000000;
-  @grayDark: #4A4A4A;
-  @grayMedium: #969696;
-  @grayLight: #B5B5B5;
-  @white: #FFFFFF;
-
-  @weekdayHeaderBg: rgb(255, 255, 255);
-  @nameColumnBg: hsl(hue(hsl(90, 100%, 50%))*3, 100%, 50%);
-  @weekdayColumnBg: rgb(255, 255, 255);
-  @calendarRow: @purpleLight;
-  @eventBg: @grayDark;
 
   display: flex;
   flex-direction: column;
@@ -35,6 +36,9 @@
 
   background: rgb(255, 255, 255);
   padding: @spacing;
+  font-weight: lighter;
+  letter-spacing: 1pt;
+  color: @white;
 
   .header {
     display: flex;
@@ -76,6 +80,17 @@
     .summary {
 
     }
+
+
+  }
+
+  .due {
+    font-weight: normal;
+  }
+
+  .overDue {
+    color: @grayLighter;
+    text-decoration: line-through;
   }
 
   .cal {
@@ -94,6 +109,7 @@
       margin: @spacing;
       padding: @spacing;
       font-size: 17pt;
+      font-weight: normal;
     }
 
     .day {
@@ -105,9 +121,7 @@
     }
 
     .today {
-      background: @grayLight;
+      background: @white;
     }
   }
-
-
 }

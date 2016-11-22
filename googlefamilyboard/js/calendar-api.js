@@ -32,7 +32,7 @@ const markOverdue = (start, end) => {
     if (end.isBefore (now, 'minute')) {
         styleClass = ' overDue';
     }
-    if (start.isBefore(now, 'minutes') && end.isAfter(now, 'minutes')) {
+    if (start.isSameOrBefore(now, 'minute') && end.isAfter(now, 'minute')) {
         styleClass = ' due blink';
     }
 
@@ -89,6 +89,10 @@ const init = () => {
     moment.locale('da');
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
+
+    let calendars = JSON.parse(localStorage.getItem('calendars'));
+
+    /*
     let calendars = [
         {
             name:'markus@buecking.dk',
@@ -110,6 +114,8 @@ const init = () => {
             name:'esben@giflen.dk',
             alias: 'Esben'
         }];
+        */
+
     loadColors();
     loadCalendars(calendars, startDate, endDate);
 };
@@ -125,7 +131,7 @@ const draw = (calendars, startDate, endDate) => {
     })
     .then(html => {
         main.innerHTML = renderHeader(startDate, endDate) + html;
-        //setTimeout(init, 1000);
+        //setTimeout(draw(calendars, startDate, endDate), 30000);
     })
 
 };

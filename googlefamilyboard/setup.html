@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Family Board Setup</title>
+    <link rel="stylesheet" type="text/css" href="css/setup.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/setup.js"></script>
+    <script>
+        function persist() {
+            let calNames = $('input[name="name[]"]').map(function() { return $(this).val(); });
+            let aliases = $('input[name="alias[]"]').map(function() { return $(this).val(); });
+
+            let calendars = [];
+            for (i = 0; i < calNames.length; i++) {
+                let cn = calNames[i];
+                let al = aliases[i];
+
+                if(cn.length > 0 || al.length > 0) {
+                    calendars.push({
+                        name: cn,
+                        alias: al
+                    });
+                }
+            }
+
+            localStorage.setItem('calendars', JSON.stringify(calendars));
+            return true;
+        }
+
+        $(document).ready( function() {
+            $('#calendarsform').submit(function() {
+                return persist(); // return false to cancel form action
+            });
+
+            var wrapper         = $(".calendars"); //Fields wrapper
+            var add_button      = $(".add_field_button"); //Add button ID
+
+            $(add_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                $(wrapper).append(renderCalendarSetup(true)); //add input box
+            });
+
+            $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('fieldset').remove();
+            });
+
+            //let calendars = JSON.parse(localStorage.getItem('calendars'));
+            $(wrapper).append(renderCalendarSetup())
+        });
+    </script>
+</head>
+<body>
+<form action="/googlefamilyboard/index.html" id="calendarsform" method="post">
+    <div class="calendars">
+        <button class="add_field_button">Add More Fields</button>
+    </div>
+    <input type="submit" value="Save" />
+</form>
+</body>
+</html>
+

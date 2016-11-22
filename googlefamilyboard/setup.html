@@ -24,6 +24,10 @@
                 }
             }
 
+            if (calendars.length == 0) {
+                return false;
+            }
+
             localStorage.setItem('calendars', JSON.stringify(calendars));
             return true;
         }
@@ -33,8 +37,15 @@
                 return persist(); // return false to cancel form action
             });
 
+
+            var reset_button    = $(".btn-reset");
             var wrapper         = $(".calendars"); //Fields wrapper
             var add_button      = $(".add_field_button"); //Add button ID
+
+            $(reset_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                window.location.reload();
+            });
 
             $(add_button).click(function(e){ //on add input button click
                 e.preventDefault();
@@ -45,17 +56,18 @@
                 e.preventDefault(); $(this).parent('fieldset').remove();
             });
 
-            //let calendars = JSON.parse(localStorage.getItem('calendars'));
-            $(wrapper).append(renderCalendarSetup())
+            let calendars = JSON.parse(localStorage.getItem('calendars'));
+            let calendarsHtml = calendars.map(cal => renderCalendarSetup(true, cal));
+            $(wrapper).append(calendarsHtml);
         });
     </script>
 </head>
 <body>
 <form action="/googlefamilyboard/index.html" id="calendarsform" method="post">
     <div class="calendars">
-        <button class="add_field_button">Add More Fields</button>
+        <button class="add_field_button">Add calendar</button>
     </div>
-    <input type="submit" value="Save" />
+    <input type="submit" value="Save" /><input class="btn-reset" type="button" value="Reset"/>
 </form>
 </body>
 </html>

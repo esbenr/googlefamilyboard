@@ -50,7 +50,7 @@ const renderCal = (cal, startDate, endDate) => {
 
 const renderHeader = (startDate, endDate) => {
     let html = `<div class="header">
-      <div class="spacer"></div>`;
+      <div class="spacer"><a href="setup.html">Settings</a></div>`;
     let day = moment(startDate);
     while (day.isSameOrBefore(endDate)) {
         html += `<div class="day">${day.format('dddd').capitalizeFirstLetter()}</div>`;
@@ -91,30 +91,6 @@ const init = () => {
     let endDate = moment().endOf('week');
 
     let calendars = JSON.parse(localStorage.getItem('calendars'));
-
-    /*
-    let calendars = [
-        {
-            name:'markus@buecking.dk',
-            alias: 'Markus'
-        },
-        {
-            name:'mikkel@giflen.dk',
-            alias: 'Mikkel'
-        },
-        {
-            name:'tobias@giflen.dk',
-            alias: 'Tobias'
-        },
-        {
-            name:'eva-maria@buecking.dk',
-            alias: 'Eva-Maria'
-        },
-        {
-            name:'esben@giflen.dk',
-            alias: 'Esben'
-        }];
-        */
 
     loadColors();
     loadCalendars(calendars, startDate, endDate);

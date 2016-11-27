@@ -39,12 +39,19 @@
 
 
             var reset_button    = $(".btn-reset");
+            var save_button    = $(".btn-save");
             var wrapper         = $(".calendars"); //Fields wrapper
             var add_button      = $(".add_field_button"); //Add button ID
 
             $(reset_button).click(function(e){ //on add input button click
                 e.preventDefault();
                 window.location.reload();
+            });
+
+            $(save_button).click(function(e){ //on save input button click
+                e.preventDefault();
+                persist();
+                window.location.href = "index.html";
             });
 
             $(add_button).click(function(e){ //on add input button click
@@ -63,12 +70,10 @@
     </script>
 </head>
 <body>
-<form action="index.html" id="calendarsform" method="post">
     <div class="calendars">
         <button class="add_field_button">Add calendar</button>
     </div>
-    <input type="submit" value="Save" /><input class="btn-reset" type="button" value="Reset"/>
-</form>
+    <input class="btn-save" type="button" value="Save" /><input class="btn-reset" type="button" value="Reset"/>
 </body>
 </html>
 

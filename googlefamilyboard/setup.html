@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Google Family Board Setup</title>
+    <title>Google Family Board setup</title>
     <link rel="stylesheet" type="text/css" href="css/setup.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/setup.js"></script>
@@ -25,6 +25,7 @@
             }
 
             if (calendars.length == 0) {
+                localStorage.removeItem('calendars');
                 return false;
             }
 
@@ -70,10 +71,29 @@
     </script>
 </head>
 <body>
-    <div class="calendars">
-        <button class="add_field_button">Add calendar</button>
+<div class="main">
+    <div class="title">
+        Google Family Board configuration
     </div>
-    <input class="btn-save" type="button" value="Save" /><input class="btn-reset" type="button" value="Reset"/>
+    <div class="description">
+        Google Family Board uses your Google Calendar to build a week calendar board of multiple calendars.</br>
+    </div>
+    <div class="subtitle">Get started</div>
+    <div>
+        <ol>
+            <li>On the <a href="index.html">family board</a> you must sign in with a Google account, if prompted.</li>
+            <li>Share the calendars, you want to show in the family board, with the Google account you signed in with.</li>
+            <li>Add/specify which calendars you want to have displayed on the <a href="index.html">family board</a> and press "Save".</li>
+        </ol>
+    </div>
+    <div class="subtitle">Calendars <button class="add_field_button">Add calendar</button></div>
+    <div class="calendars">
+
+    </div>
+    <div class="buttons">
+        <input class="btn-save" type="button" value="Save" /><input class="btn-reset" type="button" value="Reset"/>
+    </div>
+</div>
 </body>
 </html>
 

@@ -1,8 +1,4 @@
 
-const renderAddCalenderSetupButton = () => {
-    return `<button class="add_field_button">Add More Fields</button>`
-};
-
 const renderCalendarSetup = (remove, calender) => {
 
     let removeButton = ``;
@@ -23,5 +19,16 @@ const renderCalendarSetup = (remove, calender) => {
         }
     }
 
-    return `<fieldset class="cal"><legend>Calendar data</legend><div><span>Calendar name:</span><input type="text" name="name[]" required value="${nameValue}"></div><div><span>Calendar alias:</span><input type="text" name="alias[]" required value="${aliasValue}"></div>${removeButton}</fieldset>`
+    return `<fieldset class="cal">
+        <legend class="legend">Calendar data</legend>
+        <div>
+            <span>Calendar name*:</span>
+            <input type="text" name="name[]" required value="${nameValue}">
+        </div>
+        <div>
+            <span>Calendar alias:</span>
+            <input type="text" name="alias[]" required value="${aliasValue}">
+        </div>
+        ${removeButton}
+    </fieldset>`
 };

@@ -1,3 +1,46 @@
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+    font-size: 11pt;
+}
+
+.main {
+    padding: 4px;
+}
+
+.title {
+    font-size: 17pt;
+    font-weight: normal;
+}
+
+.subtitle {
+    font-weight: bold;
+}
+
+.calendars, .description {
+    font-weight: lighter;
+    letter-spacing: 0.5pt;
+    padding: 4px;
+}
+
 .cal {
     border: solid 1px black;
+}
+
+.legend {
+    font-weight: normal;
+}
+
+.note {
+    font-size: 10pt;
+    font-weight: normal;
+    padding:10px;
+}
+
+.remove_field {
+    font-size: 10pt;
+}
+.buttons {
+    padding: 10px;
 }

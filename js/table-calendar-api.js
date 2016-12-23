@@ -33,7 +33,7 @@ const markOverdue = (start, end) => {
         styleClass = ' overDue';
     }
     if (start.isSameOrBefore(now, 'minute') && end.isAfter(now, 'minute')) {
-        styleClass = ' due blink';
+        styleClass = ' due';
     }
 
     return styleClass;

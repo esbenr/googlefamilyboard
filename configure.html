@@ -11,6 +11,42 @@
     <script type="text/javascript" src="js/configuration-api.js"></script>
     <script type="text/javascript" src="js/color-api.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <script type="text/javascript">
+
+        function persist() {
+            let calendars = [];
+            $("input:checkbox[name=calendarId]:checked").each(function(){
+                let alias = $(this).siblings("input:text[name=calendarAlias]").val();
+                let id = $(this).val();
+
+                if(alias.length > 0 && id.length > 0) {
+                    calendars.push({
+                        name: id,
+                        alias: alias
+                    });
+                }
+            });
+            console.log(calendars);
+
+            if (calendars.length == 0) {
+                localStorage.removeItem('calendars');
+                return false;
+            }
+
+            localStorage.setItem('calendars', JSON.stringify(calendars));
+            return true;
+        }
+
+        $(function() {
+            console.log( "ready!" );
+            $(".saveButton").click(function(e){
+                e.preventDefault();
+                persist();
+
+                //window.location.href = "index.html";
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="main">
@@ -18,11 +54,12 @@
         Google Family Board configuration
     </div>
     <div class="description">
-        Google Family Board uses your Google Calendar to build a week calendar board of multiple calendars.</br>
+        Google Family Board uses your Google Calendar to build a week calendar board of multiple calendars.<br>
     </div>
     <div class="calendars">
 
     </div>
+    <input class="saveButton" type="button" value="Save" />
 </div>
 </body>
 </html>

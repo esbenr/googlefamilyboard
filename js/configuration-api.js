@@ -13,10 +13,14 @@ const loadCalendars = (calendars) => {
 
     request.execute(function(response) {
         $.each(response.items, function(index, calendar){
-            let matchingCal = calendars.find(function(cal){
-                return cal.name == calendar.id;
-            });
-            calendar.selected = matchingCal != undefined;
+            calendar.selected = false;
+            if(calendars) {
+                let matchingCal = calendars.find(function (cal) {
+                    return cal.name == calendar.id;
+                });
+                calendar.selected = matchingCal != undefined;
+                calendar.alias = matchingCal != undefined ? matchingCal.alias: "";
+            }
         });
 
         console.log(response.items);
@@ -38,7 +42,8 @@ const draw = (calendars) => {
 
 const renderCalendar = (calendar) => {
     return `<li class="calendar" data-cal-color="${calendar.colorId}">
-        <input type="checkbox" name="selectedCalendars" ${calendar.selected ? "checked" : ""}>
+        <input class="calendarCheckbox" type="checkbox" value="${calendar.id}" name="calendarId" ${calendar.selected ? "checked" : ""} />
         <span class="name">${calendar.summary}</span>
+        <input type="text" name="calendarAlias" value="${calendar.alias}" />
         </li>`;
 };

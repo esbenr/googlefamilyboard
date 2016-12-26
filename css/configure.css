@@ -15,19 +15,27 @@ body {
     font-weight: normal;
 }
 
-.subtitle {
-    font-weight: bold;
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-ul,li {
+li {
     list-style-type: none;
     padding: 10px;
-    margin: 0px;
+    margin: 0;
 }
 
-.name {
+.strong {
     font-weight: normal;
     letter-spacing: normal;
+}
+
+.caption {
+    font-style: italic;
+    font-size: 10pt;
+    padding: 4px;
 }
 
 .calendars, .description {
@@ -38,5 +46,5 @@ ul,li {
     font-size: 10pt;
 }
 .buttons {
-    padding: 10px;
+
 }

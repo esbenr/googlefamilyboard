@@ -28,16 +28,17 @@ const draw = (calendars) => {
     let main = document.querySelector('.calendars');
     console.log("drawing");
     Promise.all(
-        calendars.map(calendar => getCalendar(calendar, startDate, endDate))
+        calendars.map(calendar => renderCalendar(calendar))
     )
-        .then(cals => {
-            return cals.map(cal => renderCal(cal, startDate, endDate)).join('')
-        })
         .then(html => {
-            main.innerHTML = renderHeader(startDate, endDate) + html + `</table>`;
+            main.innerHTML = `<ul>` + html.join('') + `</ul>`;
             console.log("done drawing")
-            setTimeout(function() {
-                loadCalendars(calendars, startDate, endDate);
-            }, 60000);
         });
+};
+
+const renderCalendar = (calendar) => {
+    return `<li class="calendar" data-cal-color="${calendar.colorId}">
+        <input type="checkbox" name="selectedCalendars" ${calendar.selected ? "checked" : ""}>
+        <span class="name">${calendar.summary}</span>
+        </li>`;
 };

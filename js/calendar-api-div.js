@@ -96,6 +96,22 @@ const init = () => {
     loadCalendars(calendars, startDate, endDate);
 };
 
+const loadCalendars = (calendars, startDate, endDate) => {
+    var request = gapi.client.request({
+        'path': 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
+    });
+
+    request.execute(function(response) {
+        $.each(calendars, function(index, calendar){
+            let matchingCal = response.items.find(function(cal){
+                return cal.id == calendar.name;
+            });
+            calendar.colorId = matchingCal.colorId;
+        });
+        draw(calendars, startDate, endDate);
+    })
+};
+
 const draw = (calendars, startDate, endDate) => {
     let main = document.querySelector('.main');
 

@@ -50,7 +50,7 @@ const renderCal = (cal, startDate, endDate) => {
 
 const renderHeader = (startDate, endDate) => {
     let html = `<table><tr class="header">
-      <td class="spacer"><a href="setup.html">Settings</a></td>`;
+      <td class="spacer"><a href="configure.html">Settings</a></td>`;
     let day = moment(startDate);
     while (day.isSameOrBefore(endDate)) {
         html += `<td class="day">${day.format('dddd').capitalizeFirstLetter()}</td>`;

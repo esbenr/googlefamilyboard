@@ -1,8 +1,9 @@
 body {
     margin: 0;
     font-family: "Helvetica Neue", sans-serif;
-    box-sizing: border-box;
     font-size: 11pt;
+    font-weight: lighter;
+    letter-spacing: 0.5pt;
 }
 
 .main {
@@ -18,24 +19,19 @@ body {
     font-weight: bold;
 }
 
+ul,li {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0px;
+}
+
+.name {
+    font-weight: normal;
+    letter-spacing: normal;
+}
+
 .calendars, .description {
-    font-weight: lighter;
-    letter-spacing: 0.5pt;
     padding: 4px;
-}
-
-.cal {
-    border: solid 1px black;
-}
-
-.legend {
-    font-weight: normal;
-}
-
-.note {
-    font-size: 10pt;
-    font-weight: normal;
-    padding:10px;
 }
 
 .remove_field {

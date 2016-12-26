@@ -43,6 +43,6 @@ const draw = (calendars) => {
 const renderCalendar = (calendar) => {
     return `<li class="calendar" data-cal-color="${calendar.colorId}">
         <input class="calendarCheckbox" type="checkbox" value="${calendar.id}" name="calendarId" ${calendar.selected ? "checked" : ""} />
-        Vis <span class="strong">${calendar.summary}</span> på Family Board med alias* <input type="text" name="calendarAlias" value="${calendar.alias}" />&nbsp;
+        Vis <span class="strong">${calendar.summary}</span> på Family Board med alias* <input type="text" name="calendarAlias" value="${calendar.alias ? calendar.alias : ""}" />&nbsp;
         </li>`;
 };

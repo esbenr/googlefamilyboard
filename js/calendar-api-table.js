@@ -92,6 +92,11 @@ const init = () => {
 
     let calendars = JSON.parse(localStorage.getItem('calendars'));
 
+    if(!calendars) {
+        drawNoCalendarData();
+        return;
+    }
+
     loadColors();
     loadCalendars(calendars, startDate, endDate);
 };
@@ -128,6 +133,11 @@ const draw = (calendars, startDate, endDate) => {
             loadCalendars(calendars, startDate, endDate);
         }, 60000);
     });
+};
+
+const drawNoCalendarData = () => {
+    let main = document.querySelector('.main');
+    main.innerHTML = `<div class="no-calendars"><p>Du har endnu ikke konfigureret dit Googe Family Board.</p><br/><a href="configure.html" class="button">Gå til opsætning</a></div>`;
 };
 
 String.prototype.capitalizeFirstLetter = function() {

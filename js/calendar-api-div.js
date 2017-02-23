@@ -74,14 +74,16 @@ const getCalendar = (calendar, startDate, endDate) => {
             'orderBy': 'startTime'
         });
 
-        request.execute(function(resp) {
-            var events = resp.items;
+        request.then(function(resp) {
+            var events = resp.result.items;
                 resolve({
                     name: calendar.alias,
                     colorId: calendar.colorId,
                     events
                 })
-            })
+            }, function(reason) {
+            console.log('Loading calendar failed. ' + reason);
+        })
     });
 };
 
@@ -101,14 +103,16 @@ const loadCalendars = (calendars, startDate, endDate) => {
         'path': 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
     });
 
-    request.execute(function(response) {
+    request.then(function(response) {
         $.each(calendars, function(index, calendar){
-            let matchingCal = response.items.find(function(cal){
+            let matchingCal = response.result.items.find(function(cal){
                 return cal.id == calendar.name;
             });
             calendar.colorId = matchingCal.colorId;
         });
         draw(calendars, startDate, endDate);
+    }, function(reason) {
+        console.log('Loading calendar failed. ' + reason);
     })
 };
 

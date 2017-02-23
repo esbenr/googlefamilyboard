@@ -11,7 +11,7 @@ const loadCalendars = (calendars) => {
         'path': 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
     });
 
-    request.execute(function(response) {
+    request.then(function(response) {
         $.each(response.items, function(index, calendar){
             calendar.selected = false;
             if(calendars) {
@@ -23,8 +23,9 @@ const loadCalendars = (calendars) => {
             }
         });
 
-        console.log(response.items);
         draw(response.items);
+    }, function(reason) {
+        console.log('Loading calendar failed. ' + reason);
     })
 };
 

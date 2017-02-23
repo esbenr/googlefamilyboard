@@ -12,7 +12,7 @@ const loadCalendars = (calendars) => {
     });
 
     request.then(function(response) {
-        $.each(response.items, function(index, calendar){
+        $.each(response.result.items, function(index, calendar){
             calendar.selected = false;
             if(calendars) {
                 let matchingCal = calendars.find(function (cal) {
@@ -23,7 +23,7 @@ const loadCalendars = (calendars) => {
             }
         });
 
-        draw(response.items);
+        draw(response.result.items);
     }, function(reason) {
         console.log('Loading calendar failed. ' + reason);
     })

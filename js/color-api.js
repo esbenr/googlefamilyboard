@@ -4,9 +4,8 @@ const loadColors = () => {
     });
 
     request.then(function(response) {
-        console.log(response);
-        makeStyleSheet(response.calendar, 'data-cal-color');
-        makeStyleSheet(response.event, 'data-e-color');
+        makeStyleSheet(response.result.calendar, 'data-cal-color');
+        makeStyleSheet(response.result.event, 'data-e-color');
     }, function(reason) {
         console.log('Loading colors failed. ' + reason);
     })

@@ -144,6 +144,7 @@ const draw = (calendars, startDate, endDate) => {
         var reloadTimeoutString = localStorage.getItem('reloadtimeout');
         if (reloadTimeoutString) {
             var reloadTimeoutInt = parseInt(reloadTimeoutString);
+            console.log("reloading in " + reloadTimeoutInt);
             window.setTimeout(init, reloadTimeoutInt);
         }
     });

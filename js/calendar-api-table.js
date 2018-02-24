@@ -141,7 +141,7 @@ const draw = (calendars, startDate, endDate) => {
         main.innerHTML = renderHeader(startDate, endDate) + html + `</table>`;
         console.log("done drawing");
         
-        window.setTimeout(reload, 5000);
+        window.setTimeout(init, 5000);
     });
 };
 

@@ -95,7 +95,7 @@ const reload = () => {
 }
 
 const init = () => {
-    moment.locale('da');
+    moment.updateLocale('da');
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
 

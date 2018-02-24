@@ -88,7 +88,7 @@ const getCalendar = (calendar, startDate, endDate) => {
 };
 
 const init = () => {
-    moment.locale('da');
+    moment.updateLocale('da');
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
 
@@ -127,7 +127,13 @@ const draw = (calendars, startDate, endDate) => {
     })
     .then(html => {
         main.innerHTML = renderHeader(startDate, endDate) + html;
-        //setTimeout(draw(calendars, startDate, endDate), 30000);
+        
+        var reloadTimeoutString = localStorage.getItem('reloadtimeout');
+        if (reloadTimeoutString) {
+            var reloadTimeoutInt = parseInt(reloadTimeoutString);
+            console.log("reloading in " + reloadTimeoutInt);
+            window.setTimeout(init, reloadTimeoutInt);
+        }
     })
 
 };

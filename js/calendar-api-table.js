@@ -88,7 +88,7 @@ const getCalendar = (calendar, startDate, endDate) => {
 };
 
 const init = () => {
-    moment.updateLocale('da');
+    moment.locale('da');
     let startDate = moment().startOf('week');
     let endDate = moment().endOf('week');
 

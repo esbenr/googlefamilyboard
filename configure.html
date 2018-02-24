@@ -31,10 +31,15 @@
 
             if (calendars.length == 0) {
                 localStorage.removeItem('calendars');
+                localStorage.removeItem('reloadtimeout');
                 return false;
             }
 
             localStorage.setItem('calendars', JSON.stringify(calendars));
+            var reloadTimeoutString = $('#reloadTimeout').val();
+            var reloadTimeoutInt = parseInt(reloadTimeoutString);
+            var reloadTimeoutSeconds = reloadTimeoutString ? reloadTimeoutInt*1000 : 5000;
+            localStorage.setItem('reloadtimeout', reloadTimeoutSeconds);
             return true;
         }
 
@@ -72,6 +77,7 @@
 
     </div>
     <div class="caption">* Alias <span class="strong">SKAL</span> tilføjes hvis kalenderen skal vises.</div>
+    <div class="reload">Automatically reload each <input type="text" id="reloadTimeout" /> minutes.</div>
     <div class="buttons">
         <input class="saveButton" type="button" value="Gem" />
     </div>

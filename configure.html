@@ -36,6 +36,7 @@
             }
 
             localStorage.setItem('calendars', JSON.stringify(calendars));
+
             var reloadTimeoutString = $('#reloadTimeout').val();
             var reloadTimeoutInt = parseInt(reloadTimeoutString);
             var reloadTimeoutSeconds = reloadTimeoutInt*1000;
@@ -53,7 +54,8 @@
             });
             
             var reloadTimeoutSeconds = localStorage.getItem('reloadtimeout');
-            $('#reloadTimeout').val(reloadTimeoutSeconds ? reloadTimeoutSeconds : '5000');
+            var reloadTimeoutMinutes = reloadTimeoutSeconds/1000;
+            $('#reloadTimeout').val(reloadTimeoutSeconds ? reloadTimeoutMinutes : '5');
         });
     </script>
     <script>

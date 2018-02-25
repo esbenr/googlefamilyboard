@@ -1,5 +1,6 @@
 const loadColors = () => {
-    var request = gapi.client.request({
+    console.log("load colors");
+    let request = gapi.client.request({
         'path': 'https://www.googleapis.com/calendar/v3/colors'
     });
 

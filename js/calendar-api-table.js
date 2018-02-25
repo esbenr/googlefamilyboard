@@ -104,7 +104,8 @@ const init = () => {
 };
 
 const loadCalendars = (calendars, startDate, endDate) => {
-    var request = gapi.client.request({
+    console.log("loading calendars");
+    let request = gapi.client.request({
         'path': 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
     });
 
@@ -134,11 +135,11 @@ const draw = (calendars, startDate, endDate) => {
         main.innerHTML = renderHeader(startDate, endDate) + html + `</table>`;
         console.log("done drawing");
         
-        var reloadTimeoutString = localStorage.getItem('reloadtimeout');
+        let reloadTimeoutString = localStorage.getItem('reloadtimeout');
         if (reloadTimeoutString) {
-            var reloadTimeoutInt = parseInt(reloadTimeoutString);
+            let reloadTimeoutInt = parseInt(reloadTimeoutString);
             console.log("reloading in " + reloadTimeoutInt);
-            window.setTimeout(init, reloadTimeoutInt);
+            window.setTimeout(checkAuth, reloadTimeoutInt);
         }
     });
 };

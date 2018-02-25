@@ -1,10 +1,11 @@
-var CLIENT_ID = '468104940896-nm65fr8s2qf39nhj4fqcdpoteorj1abp.apps.googleusercontent.com';
-var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+let CLIENT_ID = '468104940896-nm65fr8s2qf39nhj4fqcdpoteorj1abp.apps.googleusercontent.com';
+let SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
 /**
  * Check if current user has authorized this application.
  */
 function checkAuth() {
+    console.log("checking auth");
     gapi.auth.authorize(
         {
             'client_id': CLIENT_ID,
@@ -20,9 +21,10 @@ function checkAuth() {
  */
 function handleAuthResult(authResult) {
     if (authResult && !authResult.error) {
+        console.log("auth ok");
         loadCalendarApi();
     } else {
-        // Perform authentication
+        console.log("auth not ok");
         handleAuthClick(event);
     }
 }
@@ -33,6 +35,7 @@ function handleAuthResult(authResult) {
  * @param {Event} event Button click event.
  */
 function handleAuthClick(event) {
+    console.log("authenticating");
     gapi.auth.authorize(
         {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
         handleAuthResult);
@@ -44,5 +47,6 @@ function handleAuthClick(event) {
  * once client library is loaded.
  */
 function loadCalendarApi() {
+    console.log("loading calendar library");
     gapi.client.load('calendar', 'v3', init);
 }

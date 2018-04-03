@@ -1,13 +1,13 @@
 
 const renderEvent = (event) => {
-    let start = moment(event.start.dateTime);
-    let end = moment(event.end.dateTime);
-    return `<div class="event${markOverdue(start, end)}"><p><span class="time">${start.format('LT')}</span> <span class="summary">${event.summary}</span></p></div>`
+        return `<div class="event${markOverdue(event)}${markAllDay(event)}"><p>${markRecurring(event)}<span class="summary">${event.summary}</span></p></div>`
 };
 
 const getEventsFromDay =(events, day) => {
     return events.filter(event => {
         let m = moment(event.start.dateTime);
+        if(event.start.dateTime === undefined)
+            m = moment(event.start.date);
         return m.isSame(day, 'day');
     })
 };
@@ -26,7 +26,17 @@ const markToday = (day) => {
     return moment(new Date()).isSame(day, 'day') ? ' today' : '';
 };
 
-const markOverdue = (start, end) => {
+const markOverdue = (event) => {
+    let start;
+    let end;
+    if (event.start.date !== undefined) {
+        start = moment(event.start.date);
+        end = moment(event.end.date);
+    } else if (event.start.dateTime !== undefined) {
+        start = moment(event.start.dateTime);
+        end = moment(event.end.dateTime);
+    }
+
     let now = moment(new Date());
     let styleClass = '';
     if (end.isBefore (now, 'minute')) {
@@ -37,6 +47,22 @@ const markOverdue = (start, end) => {
     }
 
     return styleClass;
+};
+
+const markRecurring = (event) => {
+    if (event.recurringEventId === undefined) {
+        return '';
+    } else {
+        return '<span class="recurring">&#x27f3;</span> ';
+    }
+};
+
+const markAllDay = (event) => {
+    if (event.start.date === undefined) {
+        return '';
+    } else {
+        return ' allDay';
+    }
 };
 
 const renderCal = (cal, startDate, endDate) => {

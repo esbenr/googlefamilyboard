@@ -1,6 +1,6 @@
 
 const renderEvent = (event) => {
-        return `<div class="event${markOverdue(event)}${markAllDay(event)}"><p>${markRecurring(event)}${addTime(event)}<span class="summary">${event.summary}</span></p></div>`
+        return `<div class="event${markOverdue(event)}${markAllDay(event)}"><p>${addTime(event)}<span class="summary">${event.summary}</span>${markRecurring(event)}</p></div>`
 };
 
 const getEventsFromDay =(events, day) => {
@@ -53,7 +53,7 @@ const markRecurring = (event) => {
     if (event.recurringEventId === undefined) {
         return '';
     } else {
-        return '<span class="recurring">&#x27f3;</span> ';
+        return ' <span class="recurring">&#x27f3;</span>';
     }
 };
 

@@ -1,4 +1,4 @@
-let CLIENT_ID = '468104940896-nm65fr8s2qf39nhj4fqcdpoteorj1abp.apps.googleusercontent.com';
+let CLIENT_ID = '468104940896-pcp515lfq7rbo734t6ebai84ca1pnan9.apps.googleusercontent.com';
 let SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 const TOKEN_EXPIRY_SKEW_MS = 60 * 1000;
 

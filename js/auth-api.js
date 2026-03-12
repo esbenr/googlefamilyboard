@@ -160,6 +160,13 @@ function requestAccessToken(interactive) {
             return;
         }
 
+        if (!tokenResponse || !tokenResponse.access_token) {
+            publishAuthStatus('error', 'Google did not return an access token. Please retry sign-in.');
+            console.log('No access token in token response.', tokenResponse);
+            return;
+        }
+
+        gapi.client.setToken(tokenResponse);
         tokenExpiresAt = Date.now() + (tokenResponse.expires_in * 1000);
         publishAuthStatus('success', 'Authentication succeeded. Token received.');
         loadCalendarApi();

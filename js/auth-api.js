@@ -119,21 +119,6 @@ function checkAuth() {
 }
 
 /**
- * Handle response from authorization server.
- *
- * @param {Object} authResult Authorization result.
- */
-function handleAuthResult(authResult) {
-    if (authResult && !authResult.error) {
-        console.log("auth ok");
-        loadCalendarApi();
-    } else {
-        console.log("auth not ok");
-        requestAccessToken(true);
-    }
-}
-
-/**
  * Initiate auth flow in response to user clicking authorize button.
  *
  * @param {Event} event Button click event.

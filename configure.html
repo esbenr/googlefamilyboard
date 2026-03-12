@@ -10,28 +10,6 @@
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-    <script>
-        window.gapiLoaded = window.gapiLoaded || function() {
-            window.dispatchEvent(new CustomEvent('gfb-auth-status', {
-                detail: {
-                    state: 'error',
-                    message: 'Expected auth script is stale or missing (gapiLoaded). Refresh after deploy.',
-                    timestamp: new Date().toISOString()
-                }
-            }));
-        };
-
-        window.gisLoaded = window.gisLoaded || function() {
-            window.dispatchEvent(new CustomEvent('gfb-auth-status', {
-                detail: {
-                    state: 'error',
-                    message: 'Expected auth script is stale or missing (gisLoaded). Refresh after deploy.',
-                    timestamp: new Date().toISOString()
-                }
-            }));
-        };
-    </script>
-
     <script type="text/javascript" src="js/auth-api.js?v=20260312"></script>
     <script type="text/javascript" src="js/configuration-api.js?v=20260312"></script>
     <script type="text/javascript" src="js/color-api.js?v=20260312"></script>
@@ -80,23 +58,19 @@
             var reloadTimeoutSeconds = localStorage.getItem('reloadtimeout');
             var reloadTimeoutMinutes = reloadTimeoutSeconds/1000;
             $('#reloadTimeout').val(reloadTimeoutSeconds ? reloadTimeoutMinutes : '5');
-
-            // Authentication diagnostics start
-            const statusList = $('#authDiagnosticsList');
             const statusPill = $('#authDiagnosticsState');
+            const statusText = $('#authDiagnosticsText');
 
-            const appendAuthStatus = (state, message, timestamp) => {
+            const appendAuthStatus = (state, message) => {
                 statusPill.removeClass('state-loading state-success state-error');
                 statusPill.addClass('state-' + state);
                 statusPill.text(state.toUpperCase());
-
-                const time = new Date(timestamp || Date.now()).toLocaleTimeString();
-                statusList.prepend(`<li><span class="diagTime">${time}</span> ${message}</li>`);
+                statusText.text(message || 'Authentication status updated.');
             };
 
             window.addEventListener('gfb-auth-status', function(evt) {
                 const detail = evt.detail || {};
-                appendAuthStatus(detail.state || 'loading', detail.message || 'Status update received.', detail.timestamp);
+                appendAuthStatus(detail.state || 'loading', detail.message || 'Status update received.');
             });
 
             $('#retryAuthButton').click(function(e) {
@@ -105,12 +79,11 @@
                 if (typeof handleAuthClick === 'function') {
                     handleAuthClick(e);
                 } else {
-                    appendAuthStatus('error', 'Auth handler missing. Please hard refresh and verify latest deploy.');
+                    appendAuthStatus('error', 'Authentication handler not loaded. Please refresh the page.');
                 }
             });
 
             appendAuthStatus('loading', 'Waiting for Google scripts to load.');
-            // Authentication diagnostics end
         });
     </script>
     <script>
@@ -139,9 +112,9 @@
     <div class="authDiagnostics">
         <div class="authDiagnosticsHeader">
             Authentication status: <span id="authDiagnosticsState" class="state-loading">LOADING</span>
-            <button id="retryAuthButton" class="retryAuthButton">Retry sign in</button>
         </div>
-        <ul id="authDiagnosticsList"></ul>
+        <div id="authDiagnosticsText">Waiting for Google scripts to load.</div>
+        <button id="retryAuthButton" class="retryAuthButton" type="button">Retry sign in</button>
     </div>
     <div class="caption">* Alias <span class="strong">SKAL</span> tilføjes hvis kalenderen skal vises.</div>
     <div class="reload">Automatically reload each <input type="text" id="reloadTimeout" /> seconds.</div>

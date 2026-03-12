@@ -59,7 +59,7 @@ li {
 
 .authDiagnosticsHeader {
     font-size: 10pt;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 #authDiagnosticsState {
@@ -89,7 +89,7 @@ li {
 }
 
 .retryAuthButton {
-    margin-left: 8px;
+    margin-top: 8px;
     border: 1px solid #98a9ba;
     background: #ffffff;
     color: #17324d;
@@ -99,25 +99,7 @@ li {
     cursor: pointer;
 }
 
-#authDiagnosticsList {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    max-height: 120px;
-    overflow-y: auto;
+#authDiagnosticsText {
     font-size: 9.5pt;
-}
-
-#authDiagnosticsList li {
-    padding: 3px 0;
-    border-bottom: 1px dotted #d6dee7;
-}
-
-#authDiagnosticsList li:last-child {
-    border-bottom: 0;
-}
-
-.diagTime {
-    color: #607486;
-    margin-right: 6px;
+    color: #2a3f52;
 }

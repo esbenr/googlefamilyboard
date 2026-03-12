@@ -6,6 +6,7 @@ let tokenClient;
 let gapiInited = false;
 let gisInited = false;
 let tokenExpiresAt = 0;
+let lastAuthInteractive = false;
 
 function isLocalDevOrigin() {
     return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -57,7 +58,22 @@ function gisLoaded() {
     tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: SCOPES.join(' '),
-        callback: ''
+        callback: '',
+        error_callback: (error) => {
+            const errorType = error && error.type ? error.type : 'unknown_error';
+
+            if (errorType === 'popup_failed_to_open') {
+                publishAuthStatus('error', 'Browser blocked Google popup. Click Retry sign in and allow popups for this site.');
+                return;
+            }
+
+            if (!lastAuthInteractive) {
+                publishAuthStatus('error', 'Silent sign-in did not work (' + errorType + '). Click Retry sign in.');
+                return;
+            }
+
+            publishAuthStatus('error', 'Authentication UI error: ' + errorType + '.');
+        }
     });
     gisInited = true;
     publishAuthStatus('loading', 'Token client initialized.');
@@ -130,9 +146,15 @@ function handleAuthClick(event) {
 }
 
 function requestAccessToken(interactive) {
+    lastAuthInteractive = interactive;
     publishAuthStatus('loading', interactive ? 'Asking Google for permission.' : 'Trying silent sign-in.');
     tokenClient.callback = (tokenResponse) => {
         if (tokenResponse && tokenResponse.error) {
+            if (!interactive) {
+                publishAuthStatus('error', 'Silent sign-in failed (' + tokenResponse.error + '). Click Retry sign in. ' + getOriginHint());
+                return;
+            }
+
             publishAuthStatus('error', 'Authentication failed: ' + tokenResponse.error + '. ' + getOriginHint());
             console.log('Authentication failed. ' + tokenResponse.error);
             return;
@@ -144,7 +166,7 @@ function requestAccessToken(interactive) {
     };
 
     try {
-        tokenClient.requestAccessToken({ prompt: interactive ? 'consent' : '' });
+        tokenClient.requestAccessToken({ prompt: interactive ? 'consent' : 'none' });
     } catch (error) {
         publishAuthStatus('error', 'Could not start Google sign-in. ' + getOriginHint());
         console.log('Could not start Google sign-in.', error);

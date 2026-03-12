@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.gstatic.com https://code.jquery.com https://cdn.jsdelivr.net https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://accounts.google.com https://www.gstatic.com https://www.google-analytics.com; frame-src https://accounts.google.com; font-src 'self' data: https:;">
     <title>Google Family Board configuration</title>
 
     <link rel="stylesheet" type="text/css" href="css/configure.css">
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
 
     <script type="text/javascript" src="js/auth-api.js"></script>
     <script type="text/javascript" src="js/configuration-api.js"></script>
     <script type="text/javascript" src="js/color-api.js"></script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     <script type="text/javascript">
 
         function persist() {
@@ -56,6 +57,33 @@
             var reloadTimeoutSeconds = localStorage.getItem('reloadtimeout');
             var reloadTimeoutMinutes = reloadTimeoutSeconds/1000;
             $('#reloadTimeout').val(reloadTimeoutSeconds ? reloadTimeoutMinutes : '5');
+
+            // Authentication diagnostics start
+            const statusList = $('#authDiagnosticsList');
+            const statusPill = $('#authDiagnosticsState');
+
+            const appendAuthStatus = (state, message, timestamp) => {
+                statusPill.removeClass('state-loading state-success state-error');
+                statusPill.addClass('state-' + state);
+                statusPill.text(state.toUpperCase());
+
+                const time = new Date(timestamp || Date.now()).toLocaleTimeString();
+                statusList.prepend(`<li><span class="diagTime">${time}</span> ${message}</li>`);
+            };
+
+            window.addEventListener('gfb-auth-status', function(evt) {
+                const detail = evt.detail || {};
+                appendAuthStatus(detail.state || 'loading', detail.message || 'Status update received.', detail.timestamp);
+            });
+
+            $('#retryAuthButton').click(function(e) {
+                e.preventDefault();
+                appendAuthStatus('loading', 'Manual retry started.');
+                handleAuthClick(e);
+            });
+
+            appendAuthStatus('loading', 'Waiting for Google scripts to load.');
+            // Authentication diagnostics end
         });
     </script>
     <script>
@@ -80,6 +108,13 @@
     </div>
     <div class="calendars">
 
+    </div>
+    <div class="authDiagnostics">
+        <div class="authDiagnosticsHeader">
+            Authentication status: <span id="authDiagnosticsState" class="state-loading">LOADING</span>
+            <button id="retryAuthButton" class="retryAuthButton">Retry sign in</button>
+        </div>
+        <ul id="authDiagnosticsList"></ul>
     </div>
     <div class="caption">* Alias <span class="strong">SKAL</span> tilføjes hvis kalenderen skal vises.</div>
     <div class="reload">Automatically reload each <input type="text" id="reloadTimeout" /> seconds.</div>

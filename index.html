@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.gstatic.com https://code.jquery.com https://cdn.jsdelivr.net https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://accounts.google.com https://www.gstatic.com https://www.google-analytics.com; frame-src https://accounts.google.com; font-src 'self' data: https:;">
     <!--<meta http-equiv="refresh" content="10">-->
     <title>Google Family Board</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
     <link rel="stylesheet/less" type="text/css" href="less/calendar-style-table.less" />
     <script src="https://cdn.jsdelivr.net/less/2.7.1/less.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.16.0/moment-with-locales.min.js"></script>
@@ -14,7 +14,8 @@
     <script type="text/javascript" src="js/auth-api.js"></script>
     <script type="text/javascript" src="js/calendar-api-table.js"></script>
     <script type="text/javascript" src="js/color-api.js"></script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

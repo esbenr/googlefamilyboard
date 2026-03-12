@@ -48,3 +48,76 @@ li {
 .buttons {
 
 }
+
+.authDiagnostics {
+    margin: 8px 4px;
+    border: 1px solid #c8d3df;
+    background: #f8fbff;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.authDiagnosticsHeader {
+    font-size: 10pt;
+    margin-bottom: 6px;
+}
+
+#authDiagnosticsState {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 9pt;
+    font-weight: normal;
+    letter-spacing: normal;
+    background: #e5ebf0;
+    color: #17324d;
+}
+
+#authDiagnosticsState.state-loading {
+    background: #e8f1fb;
+    color: #0f3a67;
+}
+
+#authDiagnosticsState.state-success {
+    background: #e7f7e7;
+    color: #205d2a;
+}
+
+#authDiagnosticsState.state-error {
+    background: #fde8e8;
+    color: #7c1f1f;
+}
+
+.retryAuthButton {
+    margin-left: 8px;
+    border: 1px solid #98a9ba;
+    background: #ffffff;
+    color: #17324d;
+    border-radius: 4px;
+    font-size: 9pt;
+    padding: 3px 8px;
+    cursor: pointer;
+}
+
+#authDiagnosticsList {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    max-height: 120px;
+    overflow-y: auto;
+    font-size: 9.5pt;
+}
+
+#authDiagnosticsList li {
+    padding: 3px 0;
+    border-bottom: 1px dotted #d6dee7;
+}
+
+#authDiagnosticsList li:last-child {
+    border-bottom: 0;
+}
+
+.diagTime {
+    color: #607486;
+    margin-right: 6px;
+}

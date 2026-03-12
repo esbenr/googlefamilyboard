@@ -1,17 +1,105 @@
 let CLIENT_ID = '468104940896-nm65fr8s2qf39nhj4fqcdpoteorj1abp.apps.googleusercontent.com';
 let SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+const TOKEN_EXPIRY_SKEW_MS = 60 * 1000;
+
+let tokenClient;
+let gapiInited = false;
+let gisInited = false;
+let tokenExpiresAt = 0;
+
+function isLocalDevOrigin() {
+    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+}
+
+function isSupportedAuthOrigin() {
+    if (window.location.protocol === 'file:') {
+        return false;
+    }
+
+    if (window.location.protocol !== 'https:' && !isLocalDevOrigin()) {
+        return false;
+    }
+
+    return true;
+}
+
+function getOriginHint() {
+    return 'Current origin: ' + window.location.origin;
+}
+
+function publishAuthStatus(state, message) {
+    window.dispatchEvent(new CustomEvent('gfb-auth-status', {
+        detail: {
+            state,
+            message,
+            timestamp: new Date().toISOString()
+        }
+    }));
+}
+
+function gapiLoaded() {
+    publishAuthStatus('loading', 'Google API client script loaded.');
+    gapi.load('client', async () => {
+        try {
+            await gapi.client.init({});
+            gapiInited = true;
+            publishAuthStatus('loading', 'Google API client initialized.');
+            maybeInitializeAuth();
+        } catch (error) {
+            publishAuthStatus('error', 'Google API initialization failed.');
+            console.log('Google API initialization failed.', error);
+        }
+    });
+}
+
+function gisLoaded() {
+    publishAuthStatus('loading', 'Google Identity Services script loaded.');
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES.join(' '),
+        callback: ''
+    });
+    gisInited = true;
+    publishAuthStatus('loading', 'Token client initialized.');
+    maybeInitializeAuth();
+}
+
+function maybeInitializeAuth() {
+    if (gapiInited && gisInited) {
+        if (!isSupportedAuthOrigin()) {
+            publishAuthStatus('error', 'OAuth needs HTTPS or localhost. ' + getOriginHint());
+            return;
+        }
+        checkAuth();
+    }
+}
+
+function hasValidToken() {
+    return !!gapi.client.getToken() && (Date.now() + TOKEN_EXPIRY_SKEW_MS) < tokenExpiresAt;
+}
 
 /**
  * Check if current user has authorized this application.
  */
 function checkAuth() {
     console.log("checking auth");
-    gapi.auth.authorize(
-        {
-            'client_id': CLIENT_ID,
-            'scope': SCOPES.join(' '),
-            'immediate': true
-        }, handleAuthResult);
+    publishAuthStatus('loading', 'Checking sign-in status.');
+    if (!isSupportedAuthOrigin()) {
+        publishAuthStatus('error', 'Cannot sign in from this page origin. Use your GitHub Pages URL. ' + getOriginHint());
+        return;
+    }
+
+    if (!gapiInited || !gisInited) {
+        return;
+    }
+
+    if (hasValidToken()) {
+        publishAuthStatus('success', 'Already signed in with a valid token.');
+        loadCalendarApi();
+        return;
+    }
+
+    requestAccessToken(false);
 }
 
 /**
@@ -25,7 +113,7 @@ function handleAuthResult(authResult) {
         loadCalendarApi();
     } else {
         console.log("auth not ok");
-        handleAuthClick(event);
+        requestAccessToken(true);
     }
 }
 
@@ -36,10 +124,31 @@ function handleAuthResult(authResult) {
  */
 function handleAuthClick(event) {
     console.log("authenticating");
-    gapi.auth.authorize(
-        {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
-        handleAuthResult);
+    publishAuthStatus('loading', 'Starting interactive sign-in.');
+    requestAccessToken(true);
     return false;
+}
+
+function requestAccessToken(interactive) {
+    publishAuthStatus('loading', interactive ? 'Asking Google for permission.' : 'Trying silent sign-in.');
+    tokenClient.callback = (tokenResponse) => {
+        if (tokenResponse && tokenResponse.error) {
+            publishAuthStatus('error', 'Authentication failed: ' + tokenResponse.error + '. ' + getOriginHint());
+            console.log('Authentication failed. ' + tokenResponse.error);
+            return;
+        }
+
+        tokenExpiresAt = Date.now() + (tokenResponse.expires_in * 1000);
+        publishAuthStatus('success', 'Authentication succeeded. Token received.');
+        loadCalendarApi();
+    };
+
+    try {
+        tokenClient.requestAccessToken({ prompt: interactive ? 'consent' : '' });
+    } catch (error) {
+        publishAuthStatus('error', 'Could not start Google sign-in. ' + getOriginHint());
+        console.log('Could not start Google sign-in.', error);
+    }
 }
 
 /**
@@ -48,5 +157,12 @@ function handleAuthClick(event) {
  */
 function loadCalendarApi() {
     console.log("loading calendar library");
-    gapi.client.load('calendar', 'v3', init);
+    publishAuthStatus('loading', 'Loading Calendar API.');
+    gapi.client.load('calendar', 'v3').then(() => {
+        publishAuthStatus('success', 'Calendar API ready.');
+        init();
+    }).catch((error) => {
+        publishAuthStatus('error', 'Could not load Calendar API.');
+        console.log('Calendar API load failed.', error);
+    });
 }
